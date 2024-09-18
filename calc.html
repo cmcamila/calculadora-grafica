@@ -82,8 +82,8 @@
                 datasets: [{
                     label: 'IMC',
                     data: [], // Dados para o gráfico
-                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: [], // Cores de fundo
+                    borderColor: [], // Cores de borda
                     borderWidth: 1,
                     barPercentage: 0.8, // Ajusta a largura das barras
                     categoryPercentage: 0.8 // Ajusta a largura das categorias
@@ -116,6 +116,14 @@
 
         let pessoas = {}; // Armazenar os dados das pessoas
 
+        // Função para gerar uma cor RGB aleatória
+        function gerarCorAleatoria() {
+            const r = Math.floor(Math.random() * 256);
+            const g = Math.floor(Math.random() * 256);
+            const b = Math.floor(Math.random() * 256);
+            return `rgba(${r}, ${g}, ${b}, 0.6)`; // Opacidade de 0.6
+        }
+
         function calcularIMC() {
             var nome = document.getElementById('nome').value.trim();
             var peso = parseFloat(document.getElementById('peso').value);
@@ -146,6 +154,12 @@
                 pessoas[nome] = imc;
                 imcChart.data.labels.push(nome);
                 imcChart.data.datasets[0].data.push(imc);
+                
+                // Adiciona cores aleatórias
+                const corAleatoria = gerarCorAleatoria();
+                imcChart.data.datasets[0].backgroundColor.push(corAleatoria);
+                imcChart.data.datasets[0].borderColor.push(corAleatoria);
+                
                 imcChart.update();
             } else {
                 var index = imcChart.data.labels.indexOf(nome);
